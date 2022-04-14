@@ -1,10 +1,10 @@
 <?php
 class db
 {
-    private $host = 'localhost';
-    private $dbname = 'bloxxs';
-    private $username = 'root';
-    private $password = '';
+    private $host = 'ec2-63-35-156-160.eu-west-1.compute.amazonaws.com';
+    private $dbname = 'd57vhth3pq73b3';
+    private $username = 'stjhlicyjplheu';
+    private $password = 'e6ebde59e80e417eb392dd4a18a985dcecf40fe95a9e93e1277af4b824beeb1c';
 
     public function __construct()
     {
