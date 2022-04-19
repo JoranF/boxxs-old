@@ -27,6 +27,16 @@ class User
 
     public function register($username, $email, $password)
     {
+        // check if username exists
+        $sql = "SELECT * FROM users WHERE username = :username";
+        $stmt = $this->db->conn->prepare($sql);
+        $stmt->bindParam(':username', $username);
+        $stmt->execute();
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($user) {
+            return false;
+        }
+        
         $hash = password_hash($password, PASSWORD_DEFAULT);
         $sql = "INSERT INTO users (username, email, password) VALUES (:username, :email, :password)";
         $stmt = $this->db->conn->prepare($sql);
