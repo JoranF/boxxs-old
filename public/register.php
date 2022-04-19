@@ -7,7 +7,7 @@ if (isset($_POST['register'])) {
         echo 'User registered!';
         header('Location: login.php');
     } else {
-        echo 'User not registered!';
+        echo 'User name already exists!';
     }
 }
 ?>
