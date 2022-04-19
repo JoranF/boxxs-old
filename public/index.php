@@ -1,5 +1,4 @@
 <?php
-
 session_start();
 require_once "../src/db.php";
 require_once "../src/files.php";
@@ -82,64 +81,68 @@ $_SESSION['file_id'] = 0;
     <?php endif ?>
 
     <div class="flex">
-        <?php if (!isset($_GET['shared'])) : ?>
-            <aside class="w-64" aria-label="Sidebar">
-                <div class="overflow-y-auto py-4 px-3 rounded dark:bg-gray-800">
-                    <ul class="space-y-2">
-                        <li>
-                            <a href="#" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
-                                <svg class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M8.707 7.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l2-2a1 1 0 00-1.414-1.414L11 7.586V3a1 1 0 10-2 0v4.586l-.293-.293z"></path>
-                                    <path d="M3 5a2 2 0 012-2h1a1 1 0 010 2H5v7h2l1 2h4l1-2h2V5h-1a1 1 0 110-2h1a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V5z"></path>
-                                </svg>
-                                <span class="flex-1 ml-3 whitespace-nowrap" type="button" data-modal-toggle="upload-modal">Upload files</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="../public/sharing.php" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
-                                <svg class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zM2 11a2 2 0 012-2h12a2 2 0 012 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2v-4z"></path>
-                                </svg>
-                                <span class="flex-1 ml-3 whitespace-nowrap" type="button" data-modal-toggle="">Shared Files</span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </aside>
+        <?php if (isset($_SESSION['user']['id'])) : ?>
+            <?php if (!isset($_GET['shared'])) : ?>
+                <aside class="w-64" aria-label="Sidebar">
+                    <div class="overflow-y-auto py-4 px-3 rounded dark:bg-gray-800">
+                        <ul class="space-y-2">
+                            <li>
+                                <a href="#" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+                                    <svg class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M8.707 7.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l2-2a1 1 0 00-1.414-1.414L11 7.586V3a1 1 0 10-2 0v4.586l-.293-.293z"></path>
+                                        <path d="M3 5a2 2 0 012-2h1a1 1 0 010 2H5v7h2l1 2h4l1-2h2V5h-1a1 1 0 110-2h1a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V5z"></path>
+                                    </svg>
+                                    <span class="flex-1 ml-3 whitespace-nowrap" type="button" data-modal-toggle="upload-modal">Upload files</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../public/sharing.php" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+                                    <svg class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zM2 11a2 2 0 012-2h12a2 2 0 012 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2v-4z"></path>
+                                    </svg>
+                                    <span class="flex-1 ml-3 whitespace-nowrap" type="button" data-modal-toggle="">Shared Files</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </aside>
+            <?php endif ?>
         <?php endif ?>
 
         <!-- show files here -->
         <div class="justify-center w-screen m-10">
             <!-- delete and share bar -->
             <div class="flex py-2 w-64 opacity-50" id="fileOptions">
-                <?php if (!isset($_GET['shared'])) :; ?>
-                    <button disabled class="mr-5 inline-flex items-center px-3 py-2 border border-gray-300 rounded-md text-sm leading-5 font-medium text-gray-700 hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-50 active:text-gray-800 transition ease-in-out duration-150" id="delete-button">
+                <?php if (isset($_SESSION['user']['id'])) : ?>
+                    <?php if (!isset($_GET['shared'])) :; ?>
+                        <button disabled class="mr-5 inline-flex items-center px-3 py-2 border border-gray-300 rounded-md text-sm leading-5 font-medium text-gray-700 hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-50 active:text-gray-800 transition ease-in-out duration-150" id="delete-button">
+                            <svg class="-ml-1 mr-2 h-5 w-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                            </svg>
+                            <p class="text-red-500">
+                                Delete
+                            </p>
+                        </button>
+                    <?php else : ?>
+                        <button disabled class="mr-5 inline-flex items-center px-3 py-2 border border-gray-300 rounded-md text-sm leading-5 font-medium text-gray-700 hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-50 active:text-gray-800 transition ease-in-out duration-150" id="archive-button">
+                            <svg class="-ml-1 mr-2 h-5 w-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                            </svg>
+                            <p class="text-red-500">
+                                Delete
+                            </p>
+                        </button>
+                    <?php endif ?>
+
+                    <button disabled class="mx-5 inline-flex items-center px-3 py-2 border border-gray-300 rounded-md text-sm leading-5 font-medium text-gray-700 hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-50 active:text-gray-800 transition ease-in-out duration-150" type="button" id="share-button" data-modal-toggle="share-button">
                         <svg class="-ml-1 mr-2 h-5 w-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                            <path fill-rule="evenodd" d="M4 3a2 2 0 012-2h3.586a2 2 0 011.414.586l7 7a2 2 0 010 2.828l-7 7A2 2 0 016.414 19H4a2 2 0 01-2-2V3zm3.293 9.293a1 1 0 010 1.414l-1.414 1.414a1 1 0 01-1.414 0l-3-3a1 1 0 111.414-1.414L9.586 10l-2.293-2.293a1 1 0 010-1.414l3-3a1 1 0 011.414 0l1.414 1.414z" clip-rule="evenodd"></path>
                         </svg>
-                        <p class="text-red-500">
-                            Delete
-                        </p>
-                    </button>
-                <?php else : ?>
-                    <button disabled class="mr-5 inline-flex items-center px-3 py-2 border border-gray-300 rounded-md text-sm leading-5 font-medium text-gray-700 hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-50 active:text-gray-800 transition ease-in-out duration-150" id="archive-button">
-                        <svg class="-ml-1 mr-2 h-5 w-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
-                        </svg>
-                        <p class="text-red-500">
-                            Delete
+                        <p class="text-green-500">
+                            Share
                         </p>
                     </button>
                 <?php endif ?>
-
-                <button disabled class="mx-5 inline-flex items-center px-3 py-2 border border-gray-300 rounded-md text-sm leading-5 font-medium text-gray-700 hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-50 active:text-gray-800 transition ease-in-out duration-150" type="button" id="share-button" data-modal-toggle="share-button">
-                    <svg class="-ml-1 mr-2 h-5 w-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" d="M4 3a2 2 0 012-2h3.586a2 2 0 011.414.586l7 7a2 2 0 010 2.828l-7 7A2 2 0 016.414 19H4a2 2 0 01-2-2V3zm3.293 9.293a1 1 0 010 1.414l-1.414 1.414a1 1 0 01-1.414 0l-3-3a1 1 0 111.414-1.414L9.586 10l-2.293-2.293a1 1 0 010-1.414l3-3a1 1 0 011.414 0l1.414 1.414z" clip-rule="evenodd"></path>
-                    </svg>
-                    <p class="text-green-500">
-                        Share
-                    </p>
-                </button>
             </div>
             <?php if (isset($_SESSION['user']['id'])) : ?>
                 <div class="border w-full flex flex-wrap ">
@@ -229,7 +232,9 @@ $_SESSION['file_id'] = 0;
                         <?php endforeach ?>
                     <?php endif ?>
                 <?php else : ?>
-                    <a class="absolute left-1/2 underline  text-xl text-gray-500" href="login.php">Login Here to Upload your files to the cloud</a>
+                    <div class="flex justify-center">
+                        <a class="underline text-xl text-gray-500" href="login.php">Login Here to Upload your files to the cloud</a>
+                    </div>
                 <?php endif ?>
 
                 </div>
@@ -458,4 +463,5 @@ $_SESSION['file_id'] = 0;
         });
     });
 </script>
+
 </html>
